@@ -1,0 +1,14 @@
+{
+  "todos": [
+    {
+      "id": "abc1233",
+      "title": "add xyz",
+      "completed": false
+    },
+    {
+      "id": "abc1234",
+      "title": "💩💩💩💩",
+      "completed": false
+    }
+  ]
+}
