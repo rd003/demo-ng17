@@ -22,7 +22,35 @@ export class TodoFacade {
   loading = computed(() => this.state().loading);
   error = computed(() => this.state().error);
 
+  setLoading() {
+    this.state.update((state) => ({
+      ...state,
+      loading: true,
+    }));
+  }
+
+  addTodo(todo: Todo) {
+    this.setLoading();
+    this.todoService.add(todo).subscribe({
+      next: (data) => {
+        this.state.update((state) => ({
+          ...state,
+          todos: [...state.todos, data],
+          loading: false,
+        }));
+      },
+      error: (error) => {
+        this.state.update((state) => ({
+          ...state,
+          loading: false,
+          error,
+        }));
+      },
+    });
+  }
+
   constructor() {
+    this.setLoading();
     this.todoService.getAll().subscribe({
       next: (data) => {
         this.state.update((state) => ({
