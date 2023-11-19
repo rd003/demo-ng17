@@ -49,6 +49,49 @@ export class TodoFacade {
     });
   }
 
+  updateTodo(todo: Todo) {
+    this.setLoading();
+    this.todoService.update(todo).subscribe({
+      next: () => {
+        this.state.update((state) => ({
+          ...state,
+          todos: state.todos.map((a) => (a.id === todo.id ? todo : a)),
+          loading: false,
+        }));
+      },
+      error: (error) => {
+        this.state.update((state) => ({
+          ...state,
+          loading: false,
+          error,
+        }));
+      },
+    });
+  }
+
+  getTodo(id: string) {
+    return this.todos().filter((a) => a.id === id)[0];
+  }
+
+  deleteTodo(id: string) {
+    this.setLoading();
+    this.todoService.delete(id).subscribe({
+      next: () => {
+        this.state.update((state) => ({
+          ...state,
+          todos: state.todos.filter((a) => a.id != id),
+          loading: false,
+        }));
+      },
+      error: (error) => {
+        this.state.update((state) => ({
+          ...state,
+          loading: false,
+          error,
+        }));
+      },
+    });
+  }
   constructor() {
     this.setLoading();
     this.todoService.getAll().subscribe({

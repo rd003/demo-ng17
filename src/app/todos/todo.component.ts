@@ -11,6 +11,7 @@ import { generateGUID } from "../shared/utils/generateGUID";
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <h1>Todo App</h1>
+    @if(todoFacade.loading()) {Loading.... }
     <div style="margin-bottom:5px;">
       <form
         [formGroup]="todoForm"
@@ -34,7 +35,12 @@ import { generateGUID } from "../shared/utils/generateGUID";
     </div>
     <ul>
       @for (todo of todos(); track $index) {
-      <li><input type="checkbox" /> {{ todo.title }} | {{ todo.completed }}</li>
+      <li style="list-style: none;font-size:18px">
+        <input type="checkbox" (click)="togglComplete(todo.id)" />
+        {{ todo.title }} | {{ todo.completed }}
+      </li>
+      } @empty {
+      <span>No items</span>
       }
     </ul>
   `,
@@ -59,5 +65,11 @@ export class TodoComponent {
     };
     this.todoFacade.addTodo(todo);
     this.todoForm.reset();
+  }
+
+  togglComplete(id: string) {
+    const todo = this.todoFacade.getTodo(id);
+    todo.completed = !todo.completed;
+    this.todoFacade.updateTodo(todo);
   }
 }
