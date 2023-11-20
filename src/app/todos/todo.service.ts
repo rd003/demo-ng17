@@ -14,15 +14,15 @@ export class TodoService {
   }
 
   update(todo: Todo): Observable<any> {
-    return this.http.put<any>(`${this.url}\${todo.id}`, todo).pipe(delay(600));
+    return this.http.put<any>(`${this.url}/${todo.id}`, todo);
   }
 
   delete(id: string): Observable<any> {
-    return this.http.delete<any>(`${this.url}\${todo.id}`).pipe(delay(600));
+    return this.http.delete<any>(`${this.url}/${id}`).pipe(delay(600));
   }
 
   getById(id: string): Observable<Todo> {
-    return this.http.get<Todo>(`${this.url}\${todo.id}`);
+    return this.http.get<Todo>(`${this.url}/${id}`);
   }
 
   getAll(): Observable<Todo[]> {

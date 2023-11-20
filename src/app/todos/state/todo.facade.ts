@@ -7,6 +7,7 @@ export interface TodoState {
   todos: Todo[];
   loading: boolean;
   error: HttpErrorResponse | null;
+  action: string;
 }
 
 @Injectable()
@@ -16,16 +17,30 @@ export class TodoFacade {
     todos: [],
     loading: false,
     error: null,
+    action: "Add",
   });
 
   todos = computed(() => this.state().todos);
+  // pendingTodos = this.todos().filter((a) => !a.completed);
+  pendingTodos = computed(() => this.state().todos.filter((a) => !a.completed));
+  completedTodos = computed(() =>
+    this.state().todos.filter((a) => a.completed)
+  );
   loading = computed(() => this.state().loading);
   error = computed(() => this.state().error);
+  action = computed(() => this.state().action);
 
   setLoading() {
     this.state.update((state) => ({
       ...state,
       loading: true,
+    }));
+  }
+
+  setAction(action: string) {
+    this.state.update((state) => ({
+      ...state,
+      action,
     }));
   }
 

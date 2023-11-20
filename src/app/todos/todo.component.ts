@@ -29,15 +29,38 @@ import { generateGUID } from "../shared/utils/generateGUID";
           style="font-size:18px;padding:6px 5px;border-radius:5px;cursor:pointer"
           [disabled]="todoForm.invalid"
         >
-          Add
+          {{ this.todoFacade.action() }}
         </button>
       </form>
     </div>
     <ul>
-      @for (todo of todos(); track $index) {
+      @for (todo of pendingTodos(); track $index) {
       <li style="list-style: none;font-size:18px">
         <input type="checkbox" (click)="togglComplete(todo.id)" />
-        {{ todo.title }} | {{ todo.completed }}
+        <span [class.complete]="todo.completed">
+          {{ todo.title }}
+        </span>
+        |
+        <button (click)="edit(todo)">✏️</button>
+        |
+        <button (click)="delete(todo.id)">❌</button>
+      </li>
+      } @empty {
+      <span>No items</span>
+      }
+    </ul>
+    <h3>Completed</h3>
+    <ul>
+      @for (todo of completedTodos(); track $index) {
+      <li style="list-style: none;font-size:18px">
+        <input type="checkbox" (click)="togglComplete(todo.id)" />
+        <span [class.complete]="todo.completed">
+          {{ todo.title }}
+        </span>
+        |
+        <button (click)="edit(todo)">✏️</button>
+        |
+        <button (click)="delete(todo.id)">❌</button>
       </li>
       } @empty {
       <span>No items</span>
@@ -45,25 +68,35 @@ import { generateGUID } from "../shared/utils/generateGUID";
     </ul>
   `,
   styles: `
+  .complete{
+    text-decoration:line-through;
+  }
   `,
   providers: [TodoFacade],
 })
 export class TodoComponent {
   todoFacade = inject(TodoFacade);
   fb = inject(FormBuilder);
-  todos = this.todoFacade.todos;
+  pendingTodos = this.todoFacade.pendingTodos;
+  completedTodos = this.todoFacade.completedTodos;
   todoForm = this.fb.group({
     id: [""],
     title: ["", Validators.required],
   });
 
   onSubmit() {
-    const todo: Todo = {
-      id: generateGUID(),
-      title: this.todoForm.get("title")?.value ?? "",
-      completed: false,
-    };
-    this.todoFacade.addTodo(todo);
+    if (this.todoForm.get("id")?.value) {
+      const todoToUpdate = Object.assign(this.todoForm.value);
+      this.todoFacade.updateTodo(todoToUpdate);
+    } else {
+      const todo: Todo = {
+        id: generateGUID(),
+        title: this.todoForm.get("title")?.value ?? "",
+        completed: false,
+      };
+      this.todoFacade.addTodo(todo);
+    }
+    this.todoFacade.setAction("Add");
     this.todoForm.reset();
   }
 
@@ -71,5 +104,16 @@ export class TodoComponent {
     const todo = this.todoFacade.getTodo(id);
     todo.completed = !todo.completed;
     this.todoFacade.updateTodo(todo);
+  }
+
+  edit(todo: Todo) {
+    this.todoFacade.setAction("Update");
+    this.todoForm.patchValue(todo);
+  }
+
+  delete(id: string) {
+    if (window.confirm("Are you sure??")) {
+      this.todoFacade.deleteTodo(id);
+    }
   }
 }
