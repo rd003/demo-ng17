@@ -19,7 +19,7 @@ import { RouterModule, RouterOutlet } from "@angular/router";
     `
       ul {
         padding: 15px 5px;
-        background-color: whitesmoke;
+        // background-color: whitesmoke;
       }
       li {
         list-style: none;
