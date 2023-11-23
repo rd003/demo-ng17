@@ -10,7 +10,7 @@ import { generateGUID } from "../shared/utils/generateGUID";
   imports: [ReactiveFormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <h1>Todo App</h1>
+    <h1>Todo App with signal</h1>
     @if(todoFacade.loading()) {Loading.... }
     <div style="margin-bottom:5px;">
       <form
