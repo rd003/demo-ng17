@@ -9,8 +9,9 @@ import { RedditService } from "./shared/data-access/reddit.service";
   imports: [CommonModule, RouterOutlet, RouterModule],
   template: `
     <ul>
-      <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+      <li><a routerLink="/todos" routerLinkActive="active">Home</a></li>
       <li><a routerLink="/todos" routerLinkActive="active">Todos</a></li>
+      <li><a routerLink="/giflist" routerLinkActive="active">Gif-List</a></li>
     </ul>
     <div style="padding:8px 10px !important;">
       <router-outlet />
