@@ -1,6 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, effect, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule, RouterOutlet } from "@angular/router";
+import { RedditService } from "./shared/data-access/reddit.service";
 
 @Component({
   selector: "app-root",
@@ -37,4 +38,15 @@ import { RouterModule, RouterOutlet } from "@angular/router";
     `,
   ],
 })
-export class AppComponent {}
+export class AppComponent {
+  redditService = inject(RedditService);
+
+  constructor() {
+    effect(() => {
+      const error = this.redditService.error();
+      if (error != null) {
+        alert(error);
+      }
+    });
+  }
+}
