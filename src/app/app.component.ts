@@ -9,9 +9,10 @@ import { RedditService } from "./shared/data-access/reddit.service";
   imports: [CommonModule, RouterOutlet, RouterModule],
   template: `
     <ul>
-      <li><a routerLink="/todos" routerLinkActive="active">Home</a></li>
-      <li><a routerLink="/todos" routerLinkActive="active">Todos</a></li>
-      <li><a routerLink="/giflist" routerLinkActive="active">Gif-List</a></li>
+      <li><a routerLink="todos" routerLinkActive="active">Home</a></li>
+      <li><a routerLink="todos" routerLinkActive="active">Todos</a></li>
+      <li><a routerLink="giflist" routerLinkActive="active">Gif-List</a></li>
+      <li><a routerLink="peoplerx" routerLinkActive="active">People-Rx</a></li>
     </ul>
     <div style="padding:8px 10px !important;">
       <router-outlet />
@@ -46,7 +47,7 @@ export class AppComponent {
     effect(() => {
       const error = this.redditService.error();
       if (error != null) {
-        alert(error);
+        //window.alert(error);
       }
     });
   }

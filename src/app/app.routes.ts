@@ -14,6 +14,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: "peoplerx",
+    loadComponent: () =>
+      import("../app/people-rx/people.rx.component").then(
+        (a) => a.PeopleRxComponent
+      ),
+  },
+  {
     path: "",
     redirectTo: "/todos",
     pathMatch: "full",
