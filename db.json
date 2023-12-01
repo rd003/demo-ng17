@@ -4,20 +4,13 @@
       "id": "abc1233",
       "title": "add xyz",
       "completed": true
-    },
+    }
+  ],
+  "people": [
     {
-      "id": "eb76feff-04ca-4c18-b166-67656b2273ca",
-      "title": "hello",
-      "completed": false
-    },
-    {
-      "id": "03d4f2a8-16d0-4fe9-86ab-bd946eb05c88",
-      "title": "abcd"
-    },
-    {
-      "id": "f0f0f96d-923b-4ea9-8e1c-ece77031453d",
-      "title": "💩💩",
-      "completed": true
+      "id": "abc12334",
+      "name": "john",
+      "email": "john@gmail.com"
     }
   ]
 }
