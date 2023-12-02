@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { PersonService } from "../shared/data-access/person.service";
 import { rxState } from "@rx-angular/state";
-import { rxEffects } from "@rx-angular/state/effects";
 import { PersonModel } from "../shared/models/person.model";
 import { AsyncPipe } from "@angular/common";
 import { HttpErrorResponse } from "@angular/common/http";
-import { catchError, endWith, map, of, startWith } from "rxjs";
+import { NEVER, catchError, endWith, map, of, startWith, tap } from "rxjs";
 import { generateGUID } from "../shared/utils/generateGUID";
 
 // export interface PersonState {
@@ -64,10 +63,41 @@ export class PeopleRxComponent {
       name: "hadsf",
       email: "abc@gmail.com",
     };
+    const addPerson$ = this.personService.add(person);
+    addPerson$
+      .pipe(
+        tap((response) => {
+          this.addPersonState(response);
+        }),
+        catchError((error) => {
+          console.log(error);
+          this.setError(error);
+          return NEVER;
+        })
+      )
+      .subscribe();
+  }
 
+  addPersonState(person: PersonModel) {
     this.state.set((state) => ({
       ...state,
       people: [...state.people, person],
+      loading: false,
+    }));
+  }
+
+  setError(error: HttpErrorResponse) {
+    this.state.set((state) => ({
+      ...state,
+      error,
+      loading: false,
+    }));
+  }
+
+  setLoading(loading: boolean) {
+    this.state.set((state) => ({
+      ...state,
+      loading,
     }));
   }
 }
