@@ -1,6 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 import { PersonModel } from "../models/person.model";
 import { HttpClient } from "@angular/common/http";
+import { delay } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class PersonService {
@@ -27,6 +28,6 @@ export class PersonService {
   }
 
   getAll() {
-    return this.http.get<PersonModel[]>(this.url);
+    return this.http.get<PersonModel[]>(this.url).pipe(delay(300));
   }
 }
