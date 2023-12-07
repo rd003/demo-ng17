@@ -12,7 +12,12 @@ import { RedditService } from "./shared/data-access/reddit.service";
       <li><a routerLink="todos" routerLinkActive="active">Home</a></li>
       <li><a routerLink="todos" routerLinkActive="active">Todos</a></li>
       <li><a routerLink="giflist" routerLinkActive="active">Gif-List</a></li>
-      <li><a routerLink="peoplerx" routerLinkActive="active">People-Rx</a></li>
+      <li><a routerLink="peoplerx" routerLinkActive="active">Rx-Angular</a></li>
+      <li>
+        <a routerLink="people-signal-store" routerLinkActive="active"
+          >Signal Store</a
+        >
+      </li>
     </ul>
     <div style="padding:8px 10px !important;">
       <router-outlet />

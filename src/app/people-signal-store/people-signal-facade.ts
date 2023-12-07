@@ -33,11 +33,11 @@ export class PeopleSignalFacade {
     }));
   }
 
-  setLoading() {
+  private setLoading() {
     patchState(this.state, { loading: true });
   }
 
-  setError(error: HttpErrorResponse) {
+  private setError(error: HttpErrorResponse) {
     patchState(this.state, { error });
   }
 
@@ -45,11 +45,14 @@ export class PeopleSignalFacade {
     const people$ = this.personService.getAll();
     people$.pipe(takeUntilDestroyed()).subscribe({
       next: (data) => {
-        patchState(this.state, { loading: false, people: data });
+        // patchState(this.state, { loading: false, people: data });
+        // patchState(this.state, (state) => ({ loading: false, people: data }));
+        patchState(this.state, (state) => ({ loading: false, people: data }));
       },
       error: (error) => {
         this.setError(error);
       },
     });
+    console.log(this.state());
   }
 }
