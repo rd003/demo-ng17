@@ -70,6 +70,27 @@ export const PersonStore = signalStore(
         )
       )
     ),
+    deletPerson: rxMethod<string>(
+      pipe(
+        tap(() => patchState(store, { loading: true })),
+        switchMap((id) =>
+          personService.delete(id).pipe(
+            tapResponse({
+              next(value) {
+                const updatedPeople = store.people().filter((a) => a.id !== id);
+                patchState(store, { people: updatedPeople });
+              },
+              error(error: HttpErrorResponse) {
+                patchState(store, { error });
+              },
+              finalize() {
+                patchState(store, { loading: false });
+              },
+            })
+          )
+        )
+      )
+    ),
     loadPeople: rxMethod<void>(
       pipe(
         tap(() => {
