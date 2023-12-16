@@ -21,6 +21,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: "people-signal-store",
+    loadComponent: () =>
+      import("../app/people-signal-store/people-signal.component").then(
+        (a) => a.PersonSignalStoreComponent
+      ),
+  },
+  {
     path: "",
     redirectTo: "/todos",
     pathMatch: "full",
