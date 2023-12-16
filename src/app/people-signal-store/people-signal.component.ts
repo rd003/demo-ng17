@@ -26,6 +26,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
       Email: <input type="email" formControlName="email" />
       <br />
       <button type="submit" [disabled]="personForm.invalid">Save</button>
+      <button type="button" (click)="this.personForm.reset()">Reset</button>
     </form>
 
     {{ this.store.error() }}
@@ -68,7 +69,12 @@ export class PersonSignalStoreComponent implements OnInit {
   }
 
   delete(person: PersonModel) {
-    if (window.confirm("Are you sure to delete?")) {
+    if (
+      window.confirm(
+        `Are you sure to delete (${person.name} | ${person.email})`
+      )
+    ) {
+      this.store.deletPerson(person.id);
     }
   }
   ngOnInit() {}
