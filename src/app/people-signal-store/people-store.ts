@@ -10,7 +10,6 @@ import { inject } from "@angular/core";
 import { PersonService } from "../shared/data-access/person.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import { pipe, switchMap, tap } from "rxjs";
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { rxMethod } from "@ngrx/signals/rxjs-interop";
 import { tapResponse } from "@ngrx/operators";
 
@@ -46,6 +45,29 @@ export const PersonStore = signalStore(
             })
           );
         })
+      )
+    ),
+    updatePerson: rxMethod<PersonModel>(
+      pipe(
+        tap(() => patchState(store, { loading: true })),
+        switchMap((person) =>
+          personService.update(person).pipe(
+            tapResponse({
+              next: () => {
+                const updatePeople = store
+                  .people()
+                  .map((a) => (a.id === person.id ? person : a));
+                patchState(store, { people: updatePeople });
+              },
+              error: (error: HttpErrorResponse) => {
+                patchState(store, { error });
+              },
+              finalize: () => {
+                patchState(store, { loading: false });
+              },
+            })
+          )
+        )
       )
     ),
     loadPeople: rxMethod<void>(

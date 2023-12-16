@@ -24,7 +24,7 @@ export const routes: Routes = [
     path: "people-signal-store",
     loadComponent: () =>
       import("../app/people-signal-store/people-signal.component").then(
-        (a) => a.PeeopleSignalStoreComponent
+        (a) => a.PersonSignalStoreComponent
       ),
   },
   {
