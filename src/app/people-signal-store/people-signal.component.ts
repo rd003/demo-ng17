@@ -12,12 +12,11 @@ import { generateGUID } from "../shared/utils/generateGUID";
 @Component({
   selector: "app-component",
   standalone: true,
-  imports: [NgFor, JsonPipe],
+  imports: [NgFor],
   template: `
     <h2>People (ngrx signal store demo)</h2>
     {{ this.store.loading() }}
     {{ this.store.error() }}
-    {{ this.people | json }}
     <ul>
       <li *ngFor="let person of this.store.people()">
         {{ person.name }} | {{ person.email }}
@@ -32,7 +31,6 @@ import { generateGUID } from "../shared/utils/generateGUID";
 })
 export class PeeopleSignalStoreComponent implements OnInit {
   readonly store = inject(PersonStore);
-  people!: PersonModel[];
 
   add() {
     const person: PersonModel = {
@@ -40,10 +38,8 @@ export class PeeopleSignalStoreComponent implements OnInit {
       name: "ravindra",
       email: "ravindra@gmail.com",
     };
-    this.store.add(person);
+    this.store.addPerson(person);
   }
 
-  ngOnInit() {
-    this.people = this.store.people();
-  }
+  ngOnInit() {}
 }

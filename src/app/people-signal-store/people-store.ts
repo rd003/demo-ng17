@@ -29,13 +29,25 @@ const initialState: State = {
 export const PersonStore = signalStore(
   withState<State>(initialState),
   withMethods((store, personService = inject(PersonService)) => ({
-    add(person: PersonModel) {
-      const newData: PersonModel[] = [...store.people(), person];
-      patchState(store, { people: newData, loading: false });
-    },
-    setLoading() {
-      patchState(store, { loading: true });
-    },
+    addPerson: rxMethod<PersonModel>(
+      pipe(
+        tap(() => patchState(store, { loading: true })),
+        switchMap((person) => {
+          return personService.add(person).pipe(
+            tapResponse({
+              next: (person) => {
+                patchState(store, { people: [...store.people(), person] });
+              },
+              error: (error: HttpErrorResponse) => {
+                console.log(error);
+                patchState(store, { error });
+              },
+              finalize: () => patchState(store, { loading: false }),
+            })
+          );
+        })
+      )
+    ),
     loadPeople: rxMethod<void>(
       pipe(
         tap(() => {
