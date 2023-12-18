@@ -27,5 +27,6 @@
       "name": "amit",
       "email": "amit@gmail.com"
     }
-  ]
+  ],
+  "Categories": [{ "id": "category0001", "name": "category1" }]
 }
