@@ -18,6 +18,7 @@ import { RedditService } from "./shared/data-access/reddit.service";
           >Signal Store</a
         >
       </li>
+      <li><a routerLink="categories" routerLinkActive="active">Category</a></li>
     </ul>
     <div style="padding:8px 10px !important;">
       <router-outlet />

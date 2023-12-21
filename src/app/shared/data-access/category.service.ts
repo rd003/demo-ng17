@@ -5,7 +5,7 @@ import { delay } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class CategoryService {
-  private readonly url = "http://localhost:3000/people";
+  private readonly url = "http://localhost:3000/categories";
   private readonly http = inject(HttpClient);
 
   add(category: Category) {

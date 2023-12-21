@@ -28,6 +28,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: "categories",
+    loadComponent: () =>
+      import("../app/category/category.component").then(
+        (a) => a.CategoryComponent
+      ),
+  },
+  {
     path: "",
     redirectTo: "/todos",
     pathMatch: "full",
