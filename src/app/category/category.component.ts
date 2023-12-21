@@ -1,14 +1,16 @@
-import { JsonPipe, NgFor, NgIf } from "@angular/common";
+import { NgIf } from "@angular/common";
 import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { CategoryStore } from "./category.store";
+import { CategoryListComponent } from "./ui/categoriy-list.component";
 
 @Component({
   selector: `app-category`,
   standalone: true,
-  imports: [NgIf, JsonPipe],
+  imports: [NgIf, CategoryListComponent],
   template: `
-    <h3>Category</h3>
-    {{ categoryStore.categories() | json }}
+    <h2>Category</h2>
+
+    <app-category-list [categories]="categoryStore.categories()" />
   `,
   styles: [],
   providers: [CategoryStore],
