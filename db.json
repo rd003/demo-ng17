@@ -28,5 +28,22 @@
       "email": "amit@gmail.com"
     }
   ],
-  "Categories": [{ "id": "category0001", "name": "category1" }]
+  "Categories": [
+    {
+      "id": "category0001",
+      "name": "category1"
+    },
+    {
+      "id": "fe33f7c0-2b0c-42a7-abc6-017819d05863",
+      "name": "category 2"
+    },
+    {
+      "id": "1aca57c5-b4f5-47fe-9a37-99baaf21ac23",
+      "name": "Computers"
+    },
+    {
+      "id": "c6b3d481-d1f9-4753-a7d6-4703d741b9a7",
+      "name": "gg"
+    }
+  ]
 }

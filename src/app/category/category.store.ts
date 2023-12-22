@@ -51,7 +51,30 @@ export const CategoryStore = signalStore(
         })
       )
     ),
+    addCategory: rxMethod<Category>(
+      pipe(
+        tap(() => patchState(store, { loading: true })),
+        switchMap((category) =>
+          categoryService.add(category).pipe(
+            tapResponse({
+              next(categoryResponse) {
+                patchState(store, {
+                  categories: [...store.categories(), categoryResponse],
+                });
+              },
+              error(error: HttpErrorResponse) {
+                patchState(store, { error });
+              },
+              finalize() {
+                patchState(store, { loading: false });
+              },
+            })
+          )
+        )
+      )
+    ),
   })),
+
   withHooks({
     onInit({ loadPeople }) {
       loadPeople();

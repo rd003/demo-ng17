@@ -4,6 +4,7 @@ import { CategoryStore } from "./category.store";
 import { CategoryListComponent } from "./ui/categoriy-list.component";
 import { CategoryFormComponent } from "./ui/category-form.component";
 import { Category } from "../shared/models/category";
+import { generateGUID } from "../shared/utils/generateGUID";
 
 @Component({
   selector: `app-category`,
@@ -20,7 +21,9 @@ import { Category } from "../shared/models/category";
 })
 export class CategoryComponent {
   categoryStore = inject(CategoryStore);
+
   onSubmit(category: Category) {
-    alert(JSON.stringify(category));
+    category.id = generateGUID();
+    this.categoryStore.addCategory(category);
   }
 }

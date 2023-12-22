@@ -16,7 +16,7 @@ import { NgIf } from "@angular/common";
   selector: "app-category-form",
   imports: [ReactiveFormsModule, MatInputModule, MatButtonModule, NgIf],
   template: `
-    <form [formGroup]="categoryForm" (ngSubmit)="onSumbit()">
+    <form [formGroup]="categoryForm" (ngSubmit)="onSumbit($event)">
       <input type="hidden" formControlName="id" />
       <div style="display:flex;gap:10px">
         <mat-form-field>
@@ -64,9 +64,11 @@ export class CategoryFormComponent {
     return this.categoryForm.controls;
   }
 
-  onSumbit() {
+  onSumbit(event: Event) {
+    event.stopPropagation();
     const category: Category = Object.assign(this.categoryForm.value);
     this.submit.emit(category);
+    this.categoryForm.reset();
   }
 
   onReset() {
