@@ -73,8 +73,55 @@ export const CategoryStore = signalStore(
         )
       )
     ),
+    updateCategory: rxMethod<Category>(
+      pipe(
+        tap(() => patchState(store, { loading: true })),
+        switchMap((category) =>
+          categoryService.update(category).pipe(
+            tapResponse({
+              next() {
+                const updatedData = store
+                  .categories()
+                  .map((c) => (c.id === category.id ? c : category));
+                patchState(store, { categories: updatedData });
+              },
+              error(error: HttpErrorResponse) {
+                console.log(error);
+                patchState(store, { error });
+              },
+              finalize() {
+                patchState(store, { loading: false });
+              },
+            })
+          )
+        )
+      )
+    ),
+    deleteCategory: rxMethod<string>(
+      pipe(
+        tap(() => patchState(store, { loading: true })),
+        switchMap((id) =>
+          categoryService.delete(id).pipe(
+            tapResponse({
+              next() {
+                const updatedCategories = store
+                  .categories()
+                  .filter((a) => a.id !== id);
+                patchState(store, { categories: updatedCategories });
+              },
+              error(error: HttpErrorResponse) {
+                console.log(error);
+                patchState(store, { error });
+              },
+              finalize() {
+                patchState(store, { loading: false });
+              },
+            })
+          )
+        )
+      )
+    ),
   })),
-
   withHooks({
     onInit({ loadPeople }) {
       loadPeople();
