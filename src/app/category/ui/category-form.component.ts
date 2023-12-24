@@ -57,8 +57,10 @@ export class CategoryFormComponent {
   @Output() submit = new EventEmitter<Category>();
   @Output() reset = new EventEmitter<void>();
   // @Input() formData!: Category | null;
-  @Input() set formData(category: Category) {
-    this.categoryForm.patchValue(category);
+  @Input() set formData(category: Category | null) {
+    if (category) {
+      this.categoryForm.patchValue(category);
+    }
   }
   fb = inject(FormBuilder);
   categoryForm = this.fb.group({
