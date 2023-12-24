@@ -55,8 +55,9 @@ import { NgIf } from "@angular/common";
 })
 export class CategoryFormComponent {
   @Output() submit = new EventEmitter<Category>();
+  @Output() reset = new EventEmitter<void>();
+  // @Input() formData!: Category | null;
   @Input() set formData(category: Category) {
-    console.log({ "👉": category });
     this.categoryForm.patchValue(category);
   }
   fb = inject(FormBuilder);
@@ -78,5 +79,12 @@ export class CategoryFormComponent {
 
   onReset() {
     this.categoryForm.reset();
+    this.reset.emit();
   }
+
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   const category: Category = changes["formData"].currentValue;
+  //   console.log(changes["formData"]);
+  //   this.categoryForm.patchValue(category);
+  // }
 }

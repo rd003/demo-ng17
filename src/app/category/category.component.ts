@@ -14,6 +14,7 @@ import { generateGUID } from "../shared/utils/generateGUID";
     <h2>Category</h2>
     <app-category-form
       (submit)="onSubmit($event)"
+      (reset)="onReset()"
       [formData]="categoryToEdit"
     />
     <app-category-list
@@ -28,7 +29,7 @@ import { generateGUID } from "../shared/utils/generateGUID";
 })
 export class CategoryComponent {
   categoryStore = inject(CategoryStore);
-  categoryToEdit!: Category;
+  categoryToEdit!: Category | null;
   onSubmit(category: Category) {
     if (category.id.length < 1) {
       category.id = generateGUID();
@@ -40,7 +41,10 @@ export class CategoryComponent {
 
   onEdit(category: Category) {
     this.categoryToEdit = category;
-    console.log(this.categoryToEdit);
+  }
+
+  onReset() {
+    this.categoryToEdit = null;
   }
 
   onDelete(category: Category) {
