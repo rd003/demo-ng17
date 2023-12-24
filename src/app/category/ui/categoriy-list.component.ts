@@ -1,5 +1,11 @@
 import { NgFor } from "@angular/common";
-import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
@@ -25,10 +31,18 @@ import { Category } from "../../shared/models/category";
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let category">
-          <button mat-raised-button color="primary">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="edit.emit(category)"
+          >
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-raised-button color="warn">
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="delete.emit(category)"
+          >
             <mat-icon>delete</mat-icon>
           </button>
         </td>
@@ -44,5 +58,7 @@ import { Category } from "../../shared/models/category";
 })
 export class CategoryListComponent {
   @Input({ required: true }) categories!: Category[];
+  @Output() edit = new EventEmitter<Category>();
+  @Output() delete = new EventEmitter<Category>();
   displayedColumns = ["name", "action"];
 }

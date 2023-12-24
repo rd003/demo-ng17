@@ -4,6 +4,7 @@ import {
   Output,
   inject,
   EventEmitter,
+  Input,
 } from "@angular/core";
 import { Category } from "../../shared/models/category";
 import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
@@ -54,6 +55,10 @@ import { NgIf } from "@angular/common";
 })
 export class CategoryFormComponent {
   @Output() submit = new EventEmitter<Category>();
+  @Input() set formData(category: Category) {
+    console.log({ "👉": category });
+    this.categoryForm.patchValue(category);
+  }
   fb = inject(FormBuilder);
   categoryForm = this.fb.group({
     id: [""],

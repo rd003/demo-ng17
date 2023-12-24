@@ -12,8 +12,15 @@ import { generateGUID } from "../shared/utils/generateGUID";
   imports: [NgIf, CategoryListComponent, CategoryFormComponent],
   template: `
     <h2>Category</h2>
-    <app-category-form (submit)="onSubmit($event)" />
-    <app-category-list [categories]="categoryStore.categories()" />
+    <app-category-form
+      (submit)="onSubmit($event)"
+      [formData]="categoryToEdit"
+    />
+    <app-category-list
+      [categories]="categoryStore.categories()"
+      (delete)="onDelete($event)"
+      (edit)="onEdit($event)"
+    />
   `,
   styles: [],
   providers: [CategoryStore],
@@ -21,9 +28,24 @@ import { generateGUID } from "../shared/utils/generateGUID";
 })
 export class CategoryComponent {
   categoryStore = inject(CategoryStore);
-
+  categoryToEdit!: Category;
   onSubmit(category: Category) {
-    category.id = generateGUID();
-    this.categoryStore.addCategory(category);
+    if (category.id.length < 1) {
+      category.id = generateGUID();
+      this.categoryStore.addCategory(category);
+    } else {
+      this.categoryStore.updateCategory(category);
+    }
+  }
+
+  onEdit(category: Category) {
+    this.categoryToEdit = category;
+    console.log(this.categoryToEdit);
+  }
+
+  onDelete(category: Category) {
+    if (window.confirm(`Are you sure to delete ${category.name}`)) {
+      this.categoryStore.deleteCategory(category.id);
+    }
   }
 }

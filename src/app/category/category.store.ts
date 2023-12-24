@@ -82,7 +82,7 @@ export const CategoryStore = signalStore(
               next() {
                 const updatedData = store
                   .categories()
-                  .map((c) => (c.id === category.id ? c : category));
+                  .map((c) => (c.id === category.id ? category : c));
                 patchState(store, { categories: updatedData });
               },
               error(error: HttpErrorResponse) {
