@@ -35,6 +35,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: "products",
+    loadComponent: () =>
+      import("../app/product/product.component").then(
+        (a) => a.ProductComponent
+      ),
+  },
+  {
     path: "",
     redirectTo: "/todos",
     pathMatch: "full",

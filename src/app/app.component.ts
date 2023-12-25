@@ -19,6 +19,7 @@ import { RedditService } from "./shared/data-access/reddit.service";
         >
       </li>
       <li><a routerLink="categories" routerLinkActive="active">Category</a></li>
+      <li><a routerLink="products" routerLinkActive="active">Product</a></li>
     </ul>
     <div style="padding:8px 10px !important;">
       <router-outlet />
