@@ -45,5 +45,17 @@
       "id": "a5647819-1940-4b6e-92f5-9f568579077d",
       "name": "sohan"
     }
+  ],
+  "products": [
+    {
+      "id": "products1111",
+      "name": "Acer laptop",
+      "category_id": "1aca57c5-b4f5-47fe-9a37-99baaf21ac23"
+    },
+    {
+      "id": "products1112",
+      "name": "Lenovo laptop",
+      "category_id": "fe33f7c0-2b0c-42a7-abc6-017819d05863"
+    }
   ]
 }
