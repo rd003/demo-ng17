@@ -1,15 +1,22 @@
 import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { ProductStore } from "./product.store";
 import { CategoryStore } from "../category/category.store";
-import { JsonPipe } from "@angular/common";
+import { ProductListComponent } from "./product-list.component";
+import { ProductFormComponent } from "./product-form.component";
+import { Product } from "../shared/models/product";
 
 @Component({
   selector: "app-product",
   standalone: true,
-  imports: [JsonPipe],
+  imports: [ProductListComponent, ProductFormComponent],
   template: `
     <h2>Products</h2>
-    {{ productStore.products() | json }}
+    <app-product-form />
+    <app-product-list
+      [products]="productStore.products()"
+      (edit)="onEdit($event)"
+      (delete)="OnDelete($event)"
+    />
   `,
   styles: [``],
   providers: [ProductStore, CategoryStore],
@@ -18,4 +25,8 @@ import { JsonPipe } from "@angular/common";
 export class ProductComponent {
   productStore = inject(ProductStore);
   categoryStore = inject(CategoryStore);
+
+  onEdit(product: Product) {}
+
+  OnDelete(product: Product) {}
 }
