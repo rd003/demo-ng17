@@ -1,11 +1,21 @@
-import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
+import { ProductStore } from "./product.store";
+import { CategoryStore } from "../category/category.store";
+import { JsonPipe } from "@angular/common";
 
 @Component({
   selector: "app-product",
   standalone: true,
-  imports: [],
-  template: ` <h2>Products</h2> `,
+  imports: [JsonPipe],
+  template: `
+    <h2>Products</h2>
+    {{ productStore.products() | json }}
+  `,
   styles: [``],
+  providers: [ProductStore, CategoryStore],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductComponent {}
+export class ProductComponent {
+  productStore = inject(ProductStore);
+  categoryStore = inject(CategoryStore);
+}
