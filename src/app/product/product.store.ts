@@ -35,7 +35,7 @@ export const ProductStore = signalStore(
           productService.add(product).pipe(
             tapResponse({
               next(savedProduct) {
-                const updatedProducts = [...store.products(), product];
+                const updatedProducts = [...store.products(), savedProduct];
                 patchState(store, { products: updatedProducts });
               },
               error(error: HttpErrorResponse) {

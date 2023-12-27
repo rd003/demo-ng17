@@ -4,7 +4,6 @@ import { CategoryStore } from "../category/category.store";
 import { ProductListComponent } from "./product-list.component";
 import { ProductFormComponent } from "./product-form.component";
 import { Product } from "../shared/models/product";
-import { Category } from "../shared/models/category";
 
 @Component({
   selector: "app-product",
@@ -38,9 +37,9 @@ export class ProductComponent {
 
   OnDelete(product: Product) {}
 
-  onSubmit(category: Category) {
-    if (category.id.length > 0) {
-      // add
+  onSubmit(product: Product) {
+    if (product.id.length < 1) {
+      this.productStore.addProduct(product);
     } else {
       //update
     }

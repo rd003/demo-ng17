@@ -56,6 +56,21 @@
       "id": "products1112",
       "name": "Lenovo laptop",
       "category_id": "fe33f7c0-2b0c-42a7-abc6-017819d05863"
+    },
+    {
+      "id": "H1COaSI",
+      "name": "abc",
+      "category_id": "category0001"
+    },
+    {
+      "id": "seH0Cdo",
+      "name": "",
+      "category_id": ""
+    },
+    {
+      "id": "4_GIPwC",
+      "name": "ccc",
+      "category_id": "fe33f7c0-2b0c-42a7-abc6-017819d05863"
     }
   ]
 }
