@@ -38,7 +38,13 @@ export class ProductComponent {
 
   OnDelete(product: Product) {}
 
-  onSubmit(category: Category) {}
+  onSubmit(category: Category) {
+    if (category.id.length > 0) {
+      // add
+    } else {
+      //update
+    }
+  }
 
   onReset() {
     this.productToEdit = null;

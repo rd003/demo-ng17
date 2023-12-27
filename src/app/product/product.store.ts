@@ -28,6 +28,27 @@ const initialState: Store = {
 export const ProductStore = signalStore(
   withState(initialState),
   withMethods((store, productService = inject(ProductService)) => ({
+    addProduct: rxMethod<Product>(
+      pipe(
+        tap(() => patchState(store, { loading: true })),
+        switchMap((product) =>
+          productService.add(product).pipe(
+            tapResponse({
+              next(savedProduct) {
+                const updatedProducts = [...store.products(), product];
+                patchState(store, { products: updatedProducts });
+              },
+              error(error: HttpErrorResponse) {
+                patchState(store, { error });
+              },
+              finalize() {
+                patchState(store, { loading: false });
+              },
+            })
+          )
+        )
+      )
+    ),
     loadPeople: rxMethod<void>(
       pipe(
         tap(() => patchState(store, { loading: true })),
