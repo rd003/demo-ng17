@@ -35,13 +35,17 @@ export class ProductComponent {
     this.productToEdit = product;
   }
 
-  OnDelete(product: Product) {}
+  OnDelete(product: Product) {
+    if (window.confirm(`Are you sure to delete ${product.name}`)) {
+      this.productStore.deleteProduct(product.id);
+    }
+  }
 
   onSubmit(product: Product) {
     if (product.id.length < 1) {
       this.productStore.addProduct(product);
     } else {
-      //update
+      this.productStore.updatePerson(product);
     }
   }
 

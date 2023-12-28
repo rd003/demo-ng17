@@ -36,7 +36,7 @@ import { Product } from "../shared/models/product";
           >
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-raised-button color="warn" (click)="edit.emit(product)">
+          <button mat-raised-button color="warn" (click)="delete.emit(product)">
             <mat-icon>delete</mat-icon>
           </button>
         </td>
