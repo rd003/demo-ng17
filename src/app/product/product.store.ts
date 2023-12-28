@@ -49,6 +49,54 @@ export const ProductStore = signalStore(
         )
       )
     ),
+    updatePerson: rxMethod<Product>(
+      pipe(
+        tap(() => patchState(store, { loading: false })),
+        switchMap((product) =>
+          productService.update(product).pipe(
+            tapResponse({
+              next(value) {
+                const updatedProducts = store
+                  .products()
+                  .map((p) => (p.id === product.id ? product : p));
+                patchState(store, { products: updatedProducts });
+              },
+              error(error: HttpErrorResponse) {
+                console.log(error);
+                patchState(store, { error });
+              },
+              finalize() {
+                patchState(store, { loading: false });
+              },
+            })
+          )
+        )
+      )
+    ),
+    deleteProduct: rxMethod<string>(
+      pipe(
+        tap(() => patchState(store, { loading: false })),
+        switchMap((id) =>
+          productService.delete(id).pipe(
+            tapResponse({
+              next(value) {
+                const updatedProducts = store
+                  .products()
+                  .filter((p) => p.id !== id);
+                patchState(store, { products: updatedProducts });
+              },
+              error(error: HttpErrorResponse) {
+                console.log(error);
+                patchState(store, { error });
+              },
+              finalize() {
+                patchState(store, { loading: false });
+              },
+            })
+          )
+        )
+      )
+    ),
     loadPeople: rxMethod<void>(
       pipe(
         tap(() => patchState(store, { loading: true })),
